@@ -18,8 +18,10 @@ public class PlayerController : MonoBehaviour
 
     private void onMove()
     {
+        // TODO : rotate player to face movement direction
         Vector2 moveInput = m_moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y) * m_moveSpeed * Time.deltaTime;
         transform.position += move;
+        // TODO : add animation for movement
     }
 }
