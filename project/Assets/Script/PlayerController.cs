@@ -3,22 +3,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private InputAction m_moveAction;
-    private float m_moveSpeed = 5f;
+    private InputAction _moveAction;
+    private float _moveSpeed = 5f;
 
     private void Start()
     {
-        m_moveAction = InputSystem.actions.FindAction("Move");
+        _moveAction = InputSystem.actions.FindAction("Move");
     }
 
     private void Update()
     {
-        onMove();
+        OnMove();
     }
 
-    private void onMove()
+    private void OnMove()
     {
-        Vector2 moveInput = m_moveAction.ReadValue<Vector2>();
+        Vector2 moveInput = _moveAction.ReadValue<Vector2>();
 
         if (moveInput == Vector2.zero) return;
 
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Slerp( Quaternion.Euler(fromRotation), Quaternion.Euler(toRotation), 0.1f );
 
         // Player's movement
-        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y) * m_moveSpeed * Time.deltaTime;
+        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y) * _moveSpeed * Time.deltaTime;
         transform.position += move;
 
         // TODO : add animation for movement

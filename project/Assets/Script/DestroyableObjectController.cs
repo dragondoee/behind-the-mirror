@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class DestroyObject : MonoBehaviour
 {
-    private bool canBeDestroyed = false;
+    private bool _canBeDestroyed = false;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            canBeDestroyed = true;
+            _canBeDestroyed = true;
         }
     }
 
@@ -16,15 +16,15 @@ public class DestroyObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            canBeDestroyed = false;
+            _canBeDestroyed = false;
         }
     }
 
     public void DestroyObjectMethod()
     {
         Debug.Log("DestroyObjectMethod called");
-        Debug.Log("canBeDestroyed: " + canBeDestroyed);
-        if (canBeDestroyed)
+        Debug.Log("canBeDestroyed: " + _canBeDestroyed);
+        if (_canBeDestroyed)
         {
             Destroy(gameObject);
         }
