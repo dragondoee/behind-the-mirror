@@ -39,6 +39,7 @@ public class DestroyObject : MonoBehaviour
         if (_canBeDestroyed)
         {
             Destroy(gameObject);
+            _indicator.SetActive(false);
         }
     }
 }
