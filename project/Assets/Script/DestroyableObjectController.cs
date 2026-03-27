@@ -3,12 +3,23 @@ using UnityEngine;
 public class DestroyObject : MonoBehaviour
 {
     private bool _canBeDestroyed = false;
+    private GameObject _indicator;
+
+    void Awake()
+    {
+        _indicator = GameObject.FindGameObjectWithTag("Indicator").gameObject;
+    }
+    void Start()
+    {
+        _indicator.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             _canBeDestroyed = true;
+            _indicator.SetActive(true);
         }
     }
 
@@ -17,6 +28,7 @@ public class DestroyObject : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _canBeDestroyed = false;
+            _indicator.SetActive(false);
         }
     }
 
