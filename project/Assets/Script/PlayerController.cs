@@ -1,24 +1,52 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private InputAction _moveAction;
-    private float _moveSpeed = 5f;
+    private float _moveSpeed = 3.5f;
 
-    private void Start()
-    {
-        _moveAction = InputSystem.actions.FindAction("Move");
-    }
+    private int _forwardInput = 0;
+    private int _backwardInput = 0;
+    private int _leftInput = 0;
+    private int _rightInput = 0;
+
+    private float _verticalAxeInput = 0;
+    private float _horizontalAxeInput = 0;
 
     private void Update()
     {
         OnMove();
     }
 
+    public void setMoveForward(int value)
+    {
+        _forwardInput = value;
+        _verticalAxeInput = _forwardInput - _backwardInput;
+    }
+
+    public void setMoveBackward(int value)
+    {
+        _backwardInput = value;
+        _verticalAxeInput = _forwardInput - _backwardInput;
+    }
+
+    public void setMoveLeft(int value)
+    {
+        _leftInput = value;
+        _horizontalAxeInput = _rightInput - _leftInput;
+    }
+
+    public void setMoveRight(int value)
+    {
+        _rightInput = value;
+        _horizontalAxeInput = _rightInput - _leftInput;
+    }
+
     private void OnMove()
     {
-        Vector2 moveInput = _moveAction.ReadValue<Vector2>();
+        Vector2 moveInput;
+        float moveCoef = 1;
+        if ( _verticalAxeInput != 0 && _horizontalAxeInput != 0) moveCoef = 0.71f;
+            moveInput = new Vector2(_horizontalAxeInput * moveCoef , _verticalAxeInput * moveCoef);
 
         if (moveInput == Vector2.zero) return;
 
