@@ -1,9 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System;
 
 public class DestroyObject : MonoBehaviour
 {
     private bool _canBeDestroyed = false;
     private GameObject _indicator;
+
+    private PlayerController _playerController;
 
     void Awake()
     {
@@ -20,6 +24,7 @@ public class DestroyObject : MonoBehaviour
         {
             _canBeDestroyed = true;
             _indicator.SetActive(true);
+            _playerController = other.GetComponent<PlayerController>();
         }
     }
 
@@ -29,17 +34,34 @@ public class DestroyObject : MonoBehaviour
         {
             _canBeDestroyed = false;
             _indicator.SetActive(false);
+            _playerController = null;
         }
     }
 
     public void DestroyObjectMethod()
     {
-        Debug.Log("DestroyObjectMethod called");
-        Debug.Log("canBeDestroyed: " + _canBeDestroyed);
-        if (_canBeDestroyed)
+        if (!_canBeDestroyed) return;
+
+        if (_playerController)
         {
-            Destroy(gameObject);
-            _indicator.SetActive(false);
+            _playerController.SpellCastAnimation();
+            StartCoroutine(WaitAndDestroy(_playerController.GetDelaySpellCastAnimation()));
         }
+        else
+        {
+            DestroyNow();
+        }
+    }
+
+    private IEnumerator WaitAndDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        DestroyNow();
+    }
+
+    private void DestroyNow()
+    {
+        _indicator.SetActive(false);
+        Destroy(gameObject);
     }
 }
