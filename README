@@ -1,0 +1,136 @@
+# 🎮 Game Setup — README
+
+> Complete guide to set up controllers, input mapping, and projection for the Unity game.
+
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Requirements](#requirements)
+3. [Installing Chataigne](#installing-chataigne)
+4. [Connecting a Wii Controller](#connecting-a-wii-controller)
+5. [Connecting a Micro:bit](#connecting-a-microbit)
+6. [Mapping Inputs to Keyboard Keys](#mapping-inputs-to-keyboard-keys)
+7. [Playing with a Regular Keyboard](#playing-with-a-regular-keyboard)
+8. [MadMapper — Projection Setup](#madmapper--projection-setup)
+9. [Troubleshooting](#troubleshooting)
+
+---
+
+## Overview
+
+This game can be played in differents ways:
+
+| Input Method | Keys Simulated |
+|---|---|
+| 🕹️ Wii Controller (Wiimote) | swing |
+| 🔵 MakeyMakey | Arrow Keys |
+| ⌨️ Keyboard (default) | Arrow Keys / `A` key |
+
+Chataigne acts as the middleware that reads signals from alternative controller like Wii or MakeyMakey, then sends simulated keyboard inputs to the game. MadMapper is used to map the game's visual output onto a physical surface for projection. In this game there is 2 screens but one of them can be optional.
+
+---
+
+## Requirements
+
+- **Unity** (any recent version, game project open and built/running)
+- **Chataigne** — [chataigne.numediart.org](https://benjamin.kuperberg.fr/chataigne/en)
+- **Wii controller**
+- **MadMapper** — [madmapper.com](https://madmapper.com)
+- Windows, macOS, or Linux
+
+---
+
+## Installing Chataigne
+
+1. Go to [https://benjamin.kuperberg.fr/chataigne/en](https://benjamin.kuperberg.fr/chataigne/en)
+2. Download the installer for your operating system
+3. Run the installer and follow the on-screen instructions
+4. Launch **Chataigne** — you should see the main interface with the **Module Manager** on the left, the **Sequence** at the bottom, and the **Inspector** on the right
+5. Open the noisette file in Chataigne.
+
+> 💡 Chataigne does **not** need to be installed inside the Unity project folder. It runs independently alongside the game.
+
+---
+
+## Connecting a Wii Controller
+
+### Step 1 — Pair via Bluetooth
+
+1. Open your system's **Bluetooth settings**
+2. Press and hold the pairing button on the back or **1 & 2** buttons.
+3. On your computer, search for new Bluetooth devices — select **Nintendo RVL-CNT-01** (or similar)
+4. Complete the pairing. The LEDs should settle (usually LED 1 stays lit)
+
+### Step 2 — The Wii module in Chataigne
+
+1. In Chataigne, click the **Wiimote** button in the Module Manager (top-left panel)
+2. In the Inspector, make sure the module is active.
+3. The module should detect your paired Wiimote automatically
+4. If not, click on Refresh Wiimotes.
+
+> It can be complicated to connect the Wii controller in the first place. You can replace it ba using the **A** key on your keyboard.
+
+---
+
+## Connecting MakeyMakey
+
+1. Connect the card via a USB cable.
+
+---
+
+## Playing with a Regular Keyboard
+
+No additional setup required. Simply launch the game and use:
+
+| Key | Action |
+|---|---|
+| `←` Arrow Left | Move Left |
+| `→` Arrow Right | Move Right |
+| `↑` Arrow Up | Move Forward |
+| `↓` Arrow Down | Move Backward |
+| `A` | Action / Spell Cast |
+
+---
+
+## MadMapper — Projection Setup
+
+MadMapper allows you to project the game output onto a physical surface (wall, floor, object) with precise mapping.
+
+### Step 1 — Output the game to a display
+
+1. In Unity, set the **Display** output to a secondary screen or a projector
+2. Run the game in **Fullscreen** or **Windowed** mode on that output
+
+### Step 2 — Capture the game in MadMapper
+
+1. Launch **MadMapper**
+2. In the **Media** panel (left), click **+** → **Screen Capture** (or **Syphon** on macOS / **Spout** on Windows for better performance)
+3. Select the display or window running your Unity game
+4. The game feed will appear as a media source in MadMapper
+
+> 💡 For Syphon (macOS): install a Unity Syphon plugin and enable output from the game.
+> For Spout (Windows): install a Unity Spout plugin — it provides low-latency sharing with MadMapper.
+
+### Step 3 — Create a Surface
+
+1. In MadMapper, drag your media source onto the **stage**
+2. A default **Quad** surface will appear — this is your projection surface
+3. Click on the surface and use the **Output** tab to adjust its shape to match your physical projection target
+
+### Step 4 — Map the projection
+
+1. Switch to **Projection Mode** (the projector icon or `P` key)
+2. Use the **corner handles** in the output view to align the projection to your physical surface
+3. For irregular shapes, use **Mesh warping** (add mesh points via the surface settings)
+4. Adjust **brightness**, **contrast**, and **gamma** in the surface Inspector if needed
+
+### Step 5 — Save the project
+
+1. Go to **File → Save** to save your MadMapper project (`.mad` file)
+2. On next launch, simply open this file and re-activate the screen capture source
+
+---
+
+*April 2026 - Unity Project*
