@@ -8,6 +8,11 @@ public class SceneController : MonoBehaviour
         LoadNextLevel();
     }
 
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
