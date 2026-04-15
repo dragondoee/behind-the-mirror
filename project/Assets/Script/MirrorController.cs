@@ -8,6 +8,15 @@ public class MirrorController : MonoBehaviour
     private bool _canBeActivated = false;
     [SerializeField] private SceneController _sceneController;
     [SerializeField] private AudioSource _mirrorAudioSource;
+    [SerializeField] private GameObject _mirrorEffect;
+
+    void Start()
+    {
+        if (_mirrorEffect)
+        {
+            _mirrorEffect.SetActive(false);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,7 +43,12 @@ public class MirrorController : MonoBehaviour
             _mirrorAudioSource.Play();
         }
 
-        StartCoroutine(WaitAndChangeLevel(_mirrorAudioSource.clip.length));
+        if (_mirrorEffect)
+        {
+            _mirrorEffect.SetActive(true);
+        }
+
+        StartCoroutine(WaitAndChangeLevel(_mirrorAudioSource ? _mirrorAudioSource.clip.length : 1f));
     }
 
     private IEnumerator WaitAndChangeLevel(float delay)
