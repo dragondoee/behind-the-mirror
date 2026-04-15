@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     private int _animIDSpellCast;
     private float _spellCastTiming = 0.8f;
 
+    // Sounds
+    [Header("Sounds")]
+    [Tooltip("Audio source for the spell cast sound effect")]
+    [SerializeField] private AudioSource _spellCastAudioSource;
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -99,6 +104,10 @@ public class PlayerController : MonoBehaviour
         if (_animator)
         {
             _animator.SetTrigger(_animIDSpellCast);
+        }
+        if (_spellCastAudioSource)
+        {
+            _spellCastAudioSource.Play();
         }
     }
 

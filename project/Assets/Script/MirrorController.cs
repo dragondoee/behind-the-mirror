@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 
 public class MirrorController : MonoBehaviour
 {
     private bool _canBeActivated = false;
     [SerializeField] private SceneController _sceneController;
+    [SerializeField] private AudioSource _mirrorAudioSource;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +29,12 @@ public class MirrorController : MonoBehaviour
     {
         if (!_canBeActivated) return;
 
-        StartCoroutine(WaitAndChangeLevel(1.0f));
+        if (_mirrorAudioSource)
+        {
+            _mirrorAudioSource.Play();
+        }
+
+        StartCoroutine(WaitAndChangeLevel(_mirrorAudioSource.clip.length));
     }
 
     private IEnumerator WaitAndChangeLevel(float delay)
