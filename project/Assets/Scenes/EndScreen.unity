@@ -2236,7 +2236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6889111579431375216, guid: 1f62bf33f7a3a6e418dc8ca133f7bacc, type: 3}
       propertyPath: _spoutName
-      value: EndScreenCamera
+      value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 6889111579431375216, guid: 1f62bf33f7a3a6e418dc8ca133f7bacc, type: 3}
       propertyPath: _sourceCamera
