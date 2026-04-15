@@ -1,21 +1,20 @@
 using UnityEngine;
 using System.Collections;
-using System;
 
 public class DestroyObject : MonoBehaviour
 {
     private bool _canBeDestroyed = false;
-    private GameObject _indicator;
-
+    private GameObject[] _indicators;
     private PlayerController _playerController;
 
     void Awake()
     {
-        _indicator = GameObject.FindGameObjectWithTag("Indicator").gameObject;
+        _indicators = GameObject.FindGameObjectsWithTag("Indicator");
     }
+
     void Start()
     {
-        _indicator.SetActive(false);
+        SetIndicatorsActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +22,7 @@ public class DestroyObject : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _canBeDestroyed = true;
-            _indicator.SetActive(true);
+            SetIndicatorsActive(true);
             _playerController = other.GetComponent<PlayerController>();
         }
     }
@@ -33,7 +32,7 @@ public class DestroyObject : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _canBeDestroyed = false;
-            _indicator.SetActive(false);
+            SetIndicatorsActive(false);
             _playerController = null;
         }
     }
@@ -61,7 +60,18 @@ public class DestroyObject : MonoBehaviour
 
     private void DestroyNow()
     {
-        _indicator.SetActive(false);
+        SetIndicatorsActive(false);
         Destroy(gameObject);
+    }
+
+    // Méthode helper pour activer/désactiver tous les indicators
+    private void SetIndicatorsActive(bool active)
+    {
+        if (_indicators == null) return;
+        foreach (GameObject indicator in _indicators)
+        {
+            if (indicator != null)
+                indicator.SetActive(active);
+        }
     }
 }
