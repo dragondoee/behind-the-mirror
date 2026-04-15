@@ -4935,6 +4935,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2096900104522343393, guid: ccce83b705e15864280aa1a8d939871e, type: 3}
   m_PrefabInstance: {fileID: 1156338744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1202312102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6789389468561753789, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+  m_PrefabInstance: {fileID: 4013758725595217485}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1211625510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9363,27 +9368,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1070858305848264214, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+      propertyPath: _event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4013758725595217491}
+    - target: {fileID: 1070858305848264214, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+      propertyPath: _event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivateMirrorMethod
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070858305848264214, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+      propertyPath: _event.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MirrorController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6789389468561753789, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
       propertyPath: m_Name
-      value: Mirror
-      objectReference: {fileID: 0}
-    - target: {fileID: 7912478750667369115, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
-      propertyPath: m_Height
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7912478750667369115, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
-      propertyPath: m_Radius
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7912478750667369115, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
-      propertyPath: m_Center.y
-      value: 1
+      value: MagicalMirror
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6789389468561753789, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4013758725595217491}
   m_SourcePrefab: {fileID: 100100000, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+--- !u!114 &4013758725595217486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2906581743024436247, guid: 6ff9e47dafb9de74da1620cd800dc37f, type: 3}
+  m_PrefabInstance: {fileID: 4013758725595217485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202312102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb61b0679ac37e14d854ccece2fcfa54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneController
+--- !u!114 &4013758725595217491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202312102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e89be5a317ac734db0678d3ba992e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MirrorController
+  _sceneController: {fileID: 4013758725595217486}
 --- !u!1001 &4243867871452807587
 PrefabInstance:
   m_ObjectHideFlags: 0
