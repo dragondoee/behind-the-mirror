@@ -64,7 +64,6 @@ public class DestroyObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Méthode helper pour activer/désactiver tous les indicators
     private void SetIndicatorsActive(bool active)
     {
         if (_indicators == null) return;
