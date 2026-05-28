@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using System;
-using Unity.VisualScripting;
 
-public class MirrorController : MonoBehaviour
+public class MirrorController : TriggerController
 {
     private bool _canBeActivated = false;
     [SerializeField] private SceneController _sceneController;
@@ -34,7 +32,7 @@ public class MirrorController : MonoBehaviour
         }
     }
 
-    public void ActivateMirrorMethod()
+    protected override void Interact()
     {
         if (!_canBeActivated) return;
 

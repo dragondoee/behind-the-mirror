@@ -1,31 +1,29 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     // Player
     [Header("Player")]
+    private InputAction _moveAction;
+    private static readonly string MOVE_ACTION = "Move";
     [Tooltip("Move speed of the character in m/s")]
     [SerializeField] private float _moveSpeed = 3.5f;
 
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float _speedChangeRate = 10f;
 
-    // Inputs 
-    private int _forwardInput = 0;
-    private int _backwardInput = 0;
-    private int _leftInput = 0;
-    private int _rightInput = 0;
-
-    // Axes
-    private float _verticalAxeInput = 0;
-    private float _horizontalAxeInput = 0;
-
     // Animation
     private Animator _animator;
+
     private int _animIDSpeed;
     private float _animationBlend;
+    private static readonly string SPEED_ANIMATION = "Speed";
+
     private int _animIDSpellCast;
     private float _spellCastTiming = 0.8f;
+    private static readonly string SPELLCAST_ANIMATION = "SpellCast";
 
     // Sounds
     [Header("Sounds")]
@@ -34,9 +32,10 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _moveAction = InputSystem.actions.FindAction(MOVE_ACTION);
         _animator = GetComponent<Animator>();
-        _animIDSpeed = Animator.StringToHash("Speed");
-        _animIDSpellCast = Animator.StringToHash("SpellCast");
+        _animIDSpeed = Animator.StringToHash(SPEED_ANIMATION);
+        _animIDSpellCast = Animator.StringToHash(SPELLCAST_ANIMATION);
     }
 
     private void Update()
@@ -44,36 +43,9 @@ public class PlayerController : MonoBehaviour
         OnMove();
     }
 
-    public void setMoveForward(int value)
-    {
-        _forwardInput = value;
-        _verticalAxeInput = _forwardInput - _backwardInput;
-    }
-
-    public void setMoveBackward(int value)
-    {
-        _backwardInput = value;
-        _verticalAxeInput = _forwardInput - _backwardInput;
-    }
-
-    public void setMoveLeft(int value)
-    {
-        _leftInput = value;
-        _horizontalAxeInput = _rightInput - _leftInput;
-    }
-
-    public void setMoveRight(int value)
-    {
-        _rightInput = value;
-        _horizontalAxeInput = _rightInput - _leftInput;
-    }
-
     private void OnMove()
     {
-        float moveCoef = 1;
-        if ( _verticalAxeInput != 0 && _horizontalAxeInput != 0) moveCoef = 0.71f;
-
-        Vector2 moveInput = new Vector2(_horizontalAxeInput * moveCoef , _verticalAxeInput * moveCoef);
+        Vector2 moveInput = _moveAction.ReadValue<Vector2>();
 
         // Walking animation
         float targetSpeed = moveInput == Vector2.zero ? 0f : _moveSpeed;
@@ -104,10 +76,21 @@ public class PlayerController : MonoBehaviour
         if (_animator)
         {
             _animator.SetTrigger(_animIDSpellCast);
+            StartCoroutine(StopSpellCastAnimationAfterDelay(_spellCastTiming));
         }
         if (_spellCastAudioSource)
         {
             _spellCastAudioSource.Play();
+        }
+    }
+
+    public IEnumerator StopSpellCastAnimationAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (_animator)
+        {
+            _animator.ResetTrigger(_animIDSpellCast);
         }
     }
 

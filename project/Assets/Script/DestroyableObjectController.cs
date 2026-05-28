@@ -1,15 +1,22 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 
 public class DestroyObject : MonoBehaviour
 {
+    private static readonly string PLAYER_TAG = "Player";
+    private static readonly string INDICATOR_TAG = "Indicator";
+    private static readonly string DESTROY_ACTION = "Destroy";
+
     private bool _canBeDestroyed = false;
     private GameObject[] _indicators;
     private PlayerController _playerController;
+    private InputAction _destroyAction;
 
     void Awake()
     {
-        _indicators = GameObject.FindGameObjectsWithTag("Indicator");
+        _destroyAction = InputSystem.actions.FindAction(DESTROY_ACTION);
+        _indicators = GameObject.FindGameObjectsWithTag(INDICATOR_TAG);
     }
 
     void Start()
@@ -19,7 +26,7 @@ public class DestroyObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(PLAYER_TAG))
         {
             _canBeDestroyed = true;
             SetIndicatorsActive(true);
@@ -27,9 +34,17 @@ public class DestroyObject : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (_destroyAction.IsPressed() && _canBeDestroyed)
+        {
+            DestroyObjectMethod();
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(PLAYER_TAG))
         {
             _canBeDestroyed = false;
             SetIndicatorsActive(false);
@@ -39,12 +54,11 @@ public class DestroyObject : MonoBehaviour
 
     public void DestroyObjectMethod()
     {
-        if (!_canBeDestroyed) return;
-
         if (_playerController)
         {
             _playerController.SpellCastAnimation();
             StartCoroutine(WaitAndDestroy(_playerController.GetDelaySpellCastAnimation()));
+            return;
         }
         else
         {
@@ -64,7 +78,6 @@ public class DestroyObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Méthode helper pour activer/désactiver tous les indicators
     private void SetIndicatorsActive(bool active)
     {
         if (_indicators == null) return;
